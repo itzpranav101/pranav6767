@@ -21,9 +21,6 @@ export default function Violin() {
           <p className="vp-close" data-r><em>{violinClose}</em></p>
           <Link to="/contact" className="tlink" data-r aria-label="Say hello"><Roll>Say hello</Roll> <Arrow /></Link>
         </div>
-        <figure className="vp-img" data-r>
-          <img src={`${B}img/art/violin.jpg`} alt="Four violin strings vibrating above a bridge, drawn in midnight blue and white" width={1200} height={1500} />
-        </figure>
       </div>
       <div className="p-bottom"><a href={`mailto:${EMAIL}`} className="mailsm" aria-label={EMAIL}><Roll>{EMAIL}</Roll></a></div>
     </section>

@@ -1,4 +1,6 @@
-# Pranav Ramanathan Portfolio
+# Pranav Ramanathan, portfolio
+
+Source for [pranavr.me](https://pranavr.me). Vite + React, GSAP and Lenis for motion.
 
 ## Run locally
 ```bash
@@ -10,12 +12,14 @@ npm run dev
 ```bash
 npm run build
 ```
+This runs `vite build` and then `scripts/prerender.mjs`, which writes a real HTML page for every route
+(`/`, `/work`, `/work/<project>`, `/info`, `/violin`, `/contact`) with its own title, description, canonical
+link, social tags and structured data, plus `sitemap.xml` and `robots.txt`. Output goes to `dist/`.
 
-## Deploy to Cloudflare Workers
-```bash
-npm run deploy
-```
+## Deploy (Cloudflare Workers)
+`wrangler.jsonc` serves `dist/` as static assets.
+- Connected to GitHub in Cloudflare: build command `npm run build`, output directory `dist`.
+- Or from your machine: `npm run deploy` (after `npx wrangler login`).
 
-The Wrangler configuration publishes the Vite build output in `dist/` as static assets and enables SPA fallback for client-side routes.
-
-For GitHub + Cloudflare: upload the contents of this folder to the repository root, then connect the repository in Cloudflare Workers & Pages. Set the build command to `npm run build` and the build output directory to `dist`. If using the Wrangler deploy workflow instead, run `npm run deploy` after authenticating Wrangler.
+## Credits
+Hero footage: "A statue being smashed" by Wesley Ford, via Pexels (Pexels licence), graded and cut into frames.

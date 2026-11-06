@@ -89,7 +89,7 @@ export function usePageMotion(route: string, ready: boolean) {
   useLayoutEffect(() => {
     if (reduced) return;
     gsap.set('.split .wi', {yPercent: 118});
-    gsap.set('[data-r]', {opacity: 0, y: 40});
+    gsap.set('[data-r]', {opacity: 0, y: 34, filter: 'blur(10px)'});
     gsap.set('.imr', {clipPath: 'inset(0% 0% 100% 0%)'});
     gsap.set('.imr .imi', {scale: 1.3});
   }, [route]);
@@ -103,7 +103,7 @@ export function usePageMotion(route: string, ready: boolean) {
         const each = el.dataset.by === 'char' ? 0.035 : 0.055;
         ScrollTrigger.create({trigger: el, start: 'top 94%', once: true, onEnter: () => { gsap.to(t, {yPercent: 0, duration: 1.25, ease: 'expo.out', stagger: each, delay: hero ? 0.1 : 0}); }});
       });
-      ScrollTrigger.batch('[data-r]', {start: 'top 99%', once: true, onEnter: (b) => { gsap.to(b, {opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.09, overwrite: true}); }});
+      ScrollTrigger.batch('[data-r]', {start: 'top 99%', once: true, onEnter: (b) => { gsap.to(b, {opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: 'expo.out', stagger: 0.08, overwrite: true, clearProps: 'filter'}); }});
       gsap.utils.toArray<HTMLElement>('.imr').forEach((el) => {
         ScrollTrigger.create({trigger: el, start: 'top 90%', once: true, onEnter: () => {
           gsap.to(el, {clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'expo.inOut'});

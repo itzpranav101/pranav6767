@@ -5,6 +5,7 @@ import {Link, Roll, Split, reduced, smooth} from '../motion';
 import {B, EMAIL, SCHOOL_SHORT, manifesto, projects, socials, violin} from '../data';
 import Thumb from '../Thumb';
 import Cubes from '../Cubes';
+import StatueSeq from '../StatueSeq';
 
 function Arrow({className}: {className?: string}) {
   return <svg className={className} viewBox="0 0 84 85" fill="currentColor" aria-hidden="true"><path d="M11 38H54L37 21H51L73 43L51 65H37L54 48H11Z" /></svg>;
@@ -12,6 +13,7 @@ function Arrow({className}: {className?: string}) {
 
 export default function Home({ready}: {ready: boolean}) {
   const root = useRef<HTMLDivElement>(null);
+  const prog = useRef(0);
   const list = projects;
 
   useLayoutEffect(() => {
@@ -33,15 +35,18 @@ export default function Home({ready}: {ready: boolean}) {
       gsap.to(['.hero .blurb', '.hero .hero-foot'], {opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', stagger: 0.15, delay: 0.5});
 
       /* pinned hero: image grows from the middle to full bleed, intro line appears */
-      const tl = gsap.timeline({scrollTrigger: {trigger: q('.hero-wrap'), start: 'top top', end: 'bottom bottom', scrub: 0.7}, defaults: {ease: 'none'}});
-      /* image opens fast, the line arrives early and holds for most of the scroll, then fades */
+      const tl = gsap.timeline({scrollTrigger: {trigger: q('.hero-wrap'), start: 'top top', end: 'bottom bottom', scrub: 0.7, onUpdate: (s) => { prog.current = s.progress; }}, defaults: {ease: 'none'}});
+      /* the frame grows out of the gradient, the line sits in it and holds, then the frame opens to full bleed and fades */
+      const framed = innerWidth < 760 ? 'inset(10% 5% 12% 5% round 16px)' : 'inset(5% 3.5% 5% 3.5% round 18px)';
       tl.fromTo('.hero .hero-foot, .hero .blurb', {opacity: 1}, {opacity: 0, duration: 0.06, immediateRender: false}, 0)
-        .fromTo('.reveal', {clipPath: 'inset(50% 50% 50% 50% round 26px)'}, {clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: 0.3, ease: 'power2.inOut'}, 0.02)
-        .fromTo('.reveal img', {scale: 1.5}, {scale: 1, duration: 0.34}, 0.02)
+        .fromTo('.reveal', {clipPath: 'inset(50% 50% 50% 50% round 18px)'}, {clipPath: framed, duration: 0.34, ease: 'power2.inOut'}, 0.02)
         .to('.hero .name', {opacity: 0, scale: 1.04, duration: 0.12}, 0.2)
-        .fromTo('.hero .lead .li', {yPercent: 110}, {yPercent: 0, duration: 0.1, stagger: 0.02, ease: 'power2.out'}, 0.3)
-        .fromTo('.hero .lead-veil', {opacity: 0}, {opacity: 1, duration: 0.1}, 0.28)
-        .to('.hero .lead .li', {yPercent: -110, duration: 0.05, stagger: 0.01}, 0.9)
+        .fromTo('.reveal .rm', {opacity: 0}, {opacity: 1, duration: 0.06}, 0.32)
+        .fromTo('.hero .lead .li', {yPercent: 110}, {yPercent: 0, duration: 0.1, stagger: 0.015, ease: 'power2.out'}, 0.36)
+        .fromTo('.hero .lead-veil', {opacity: 0}, {opacity: 1, duration: 0.1}, 0.34)
+        .to('.hero .lead .li', {yPercent: -110, duration: 0.05, stagger: 0.008}, 0.84)
+        .to('.reveal .rm', {opacity: 0, duration: 0.04}, 0.84)
+        .to('.reveal', {clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: 0.1, ease: 'power2.inOut'}, 0.84)
         .fromTo('.hero .shade', {opacity: 0}, {opacity: 1, duration: 0.05}, 0.95);
 
       /* parallax on the two feature images */
@@ -83,7 +88,8 @@ export default function Home({ready}: {ready: boolean}) {
     const t = document.getElementById(id);
     if (smooth.lenis) smooth.lenis.scrollTo(t ?? 0, {duration: 1.6}); else t?.scrollIntoView({behavior: reduced ? 'auto' : 'smooth'});
   };
-  const LEAD = 'Too young to wait. Old enough to build.';
+  const LEAD = 'Alea iacta est.';
+  const LEAD_BY = 'The die is cast · Julius Caesar';
   const leadWords = LEAD.split(' ');
 
   return (
@@ -93,9 +99,10 @@ export default function Home({ready}: {ready: boolean}) {
         <div className="hero stage">
           <p className="blurb">Student building robots, <em>and software that helps people,</em> through care, detail and restraint.</p>
           <Split as="h1" by="char" className="name">Pranav <em>Ramanathan.</em></Split>
-          <div className="reveal" aria-hidden="true"><img src={`${B}img/art/reveal.jpg`} alt="" /></div>
-          <p className="lead" aria-label={LEAD}>
+          <div className="reveal"><StatueSeq progress={prog} /><i className="rm tl" /><i className="rm tr" /><i className="rm bl" /><i className="rm br" /></div>
+          <p className="lead" aria-label={`${LEAD} ${LEAD_BY}`}>
             {leadWords.map((w, i) => <span className="lw" key={i}><span className="li">{w}</span></span>)}
+            <span className="lw lead-by"><span className="li">{LEAD_BY}</span></span>
           </p>
           <div className="lead-veil" aria-hidden="true" />
           <div className="shade" />
@@ -113,9 +120,6 @@ export default function Home({ready}: {ready: boolean}) {
             <p className="about-small" data-r>Student builder and creative developer from Singapore, studying at {SCHOOL_SHORT}. Passionate about design, hardware and the details nobody notices, I&rsquo;m always chasing the point where technology stops being noticed and starts being useful.</p>
             <Link to="/info" className="tlink" data-r aria-label="More about me"><Roll>More about me</Roll> <Arrow className="ar" /></Link>
           </div>
-          <figure className="portrait">
-            <img className="plx-img" src={`${B}img/art/about.jpg`} alt="A large italic letter P on a midnight blue background" loading="lazy" />
-          </figure>
         </div>
       </section>
 
@@ -129,9 +133,6 @@ export default function Home({ready}: {ready: boolean}) {
       {/* 4 · violin */}
       <section id="violin" className="violin-sec">
         <div className="vs-grid">
-          <figure className="vs-img">
-            <img src={`${B}img/art/violin.jpg`} alt="Four violin strings vibrating above a bridge, drawn in midnight blue and white" loading="lazy" />
-          </figure>
           <div className="vs-text">
             <Split as="h2" className="vs-big">{violin.line}</Split>
             <p className="vs-p" data-r>{violin.body}</p>

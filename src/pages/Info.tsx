@@ -11,7 +11,7 @@ export default function Info() {
       <Split as="h1" className="ptitle2">About</Split>
       <div className="i-grid">
         <aside className="i-side" data-r>
-          <figure className="i-frame"><img src={`${B}img/art/about.jpg`} alt="A large italic letter P on a midnight blue background" /><i className="pl tl" /><i className="pl tr" /><i className="pl bl" /><i className="pl br" /></figure>
+          
           <dl className="i-meta">
             <div><dt>Based in</dt><dd>Singapore</dd></div>
             <div><dt>School</dt><dd>{SCHOOL_SHORT}, Singapore</dd></div>
