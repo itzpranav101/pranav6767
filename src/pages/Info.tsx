@@ -1,5 +1,5 @@
 import {Link, Roll, Split} from '../motion';
-import {EMAIL, SCHOOL_SHORT, focus, principles} from '../data';
+import {EMAIL, SCHOOL_SHORT, principles} from '../data';
 
 function Arrow() {
   return <svg className="ar" viewBox="0 0 84 85" fill="currentColor" aria-hidden="true"><g transform="rotate(-135 42 42.5)"><path d="M11 38H54L37 21H51L73 43L51 65H37L54 48H11Z" /></g></svg>;
@@ -21,10 +21,7 @@ export default function Info() {
         <div className="i-main">
           <h2 className="i-name" data-r>Pranav Ramanathan<b>.</b></h2>
           <p className="i-lead" data-r>Student builder and creative developer, studying at {SCHOOL_SHORT} in Singapore.</p>
-          <p className="i-p" data-r>I build things that sit quietly in people&rsquo;s lives: software, hardware and everything in between. Passionate about design, motion and the details nobody notices, I&rsquo;m always looking for the point where precision meets <em>care</em>, and where technology stops being noticed and starts being useful.</p>
-          <div className="i-cols" data-r>
-            {focus.map((f) => <div key={f.t}><h3>{f.t}</h3><p>{f.proof}</p></div>)}
-          </div>
+          <p className="i-p" data-r>My work sits where finance, robotics and code meet. I&rsquo;m fascinated by how money and markets move and how small decisions compound; I build machines and sensors that touch the real world, from firmware up; and I ship apps and websites end to end, from SwiftUI and Kotlin on phones to React and TypeScript on the web. Whatever I&rsquo;m making, I care about <em>care</em>, detail, and saying only what I&rsquo;ve measured.</p>
           <div className="i-cols" data-r>
             {principles.map((p) => <div key={p.n}><h3>{p.t}</h3><p>{p.d}</p></div>)}
           </div>

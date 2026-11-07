@@ -30,7 +30,7 @@ export const projects: Project[] = [
   {
     slug: 'rooted-sg', title: 'ROOTED SG', kicker: 'A city that counts what it keeps alive.', year: '2026', cat: 'Apps', status: 'iOS and Android', accent: 1, featured: true,
     body: 'Hundreds of thousands of free seed packets, and nobody counts the survivors. ROOTED SG does. Keep a garden on the register, trade produce with neighbours, finish quests, fill your BioDex. Don’t count what we plant. Count what we keep alive.',
-    detail: 'Native SwiftUI on iOS with an Android port. Plant checks run on the phone using Apple’s Vision framework. Entered in Samsung Solve for Tomorrow 2026.',
+    detail: 'Native SwiftUI on iOS with an Android port. Plant checks run on the phone using Apple’s Vision framework.',
     stack: ['SwiftUI', 'Kotlin', 'On-device Vision'],
     media: {src: `${B}img/rooted.gif`, card: `${B}img/rooted-card.jpg`, alt: 'Screen recording of the ROOTED SG app showing a plant page and the produce market', kind: 'phone', caption: 'Screen recording of the iOS app'},
     links: [{label: 'Source', href: 'https://github.com/itzpranav101/rootedsg'}],
@@ -45,8 +45,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'linguabomb', title: 'LinguaBomb', kicker: 'Five languages. Zero fear.', year: '2026', cat: 'Web', status: 'Live', accent: 0, featured: true,
-    body: 'An AI tutor that teaches, quizzes and role-plays with you in English, Hindi, Spanish, French and Mandarin, and turns every exchange into XP. Built in a single day, under competition pressure.',
-    detail: 'Built with Team Bomb Island for Battle of Bots, a one-day AI chatbot competition.',
+    body: 'An AI tutor that teaches, quizzes and role-plays with you in English, Hindi, Spanish, French and Mandarin, and turns every exchange into XP.',
+    detail: 'Built in a day with Team Bomb Island.',
     stack: ['JavaScript', 'Chatbot', 'Knowledge base'],
     media: {src: `${B}img/linguabomb-card.jpg`.replace('-card',''), card: `${B}img/linguabomb-card.jpg`, alt: 'The LinguaBomb website: Speak a new language with confidence', kind: 'wide'},
     links: [{label: 'Live site', href: 'https://itzpranav101.github.io/linguabomb/'}, {label: 'Source', href: 'https://github.com/itzpranav101/linguabomb'}],
@@ -134,9 +134,3 @@ export const manifesto: [string, string, string][] = [
 ];
 
 
-/** What Pranav works on. Each line points at something real he has done. */
-export const focus: {t: string; line: string; proof: string}[] = [
-  {t: 'Finance', line: 'Markets, money and how decisions compound.', proof: 'Competing in the Wharton Global High School Investment Competition, and built FinFlow Academy to teach students finance.'},
-  {t: 'Robotics', line: 'Machines that touch the real world.', proof: 'RootStake puts a probe, two stem needles and an ESP32 into a plant pot and streams it all to a phone.'},
-  {t: 'Code', line: 'Apps and the web, end to end.', proof: 'SwiftUI and Kotlin on phones, React and TypeScript on the web: Meco, ROOTED SG, LinguaBomb.'},
-];

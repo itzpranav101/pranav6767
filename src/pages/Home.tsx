@@ -117,7 +117,7 @@ export default function Home({ready}: {ready: boolean}) {
         <div className="about-grid">
           <div className="about-text">
             <Split as="h2" className="about-big">As a <em>student builder</em>, I make robots and software that keep people in charge of their own day, blending care and <em>precision.</em></Split>
-            <p className="about-small" data-r>Student builder from Singapore, studying at {SCHOOL_SHORT}. I work across finance, robotics and code: competing in the Wharton investment competition, building sensors that live in the soil, and shipping apps and websites end to end.</p>
+            <p className="about-small" data-r>Student builder from Singapore, studying at {SCHOOL_SHORT}. My work sits where finance, robotics and code meet: I&rsquo;m fascinated by how money and markets move, I build machines and sensors that touch the real world, and I ship apps and websites end to end.</p>
             <Link to="/info" className="tlink" data-r aria-label="More about me"><Roll>More about me</Roll> <Arrow className="ar" /></Link>
           </div>
         </div>

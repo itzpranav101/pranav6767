@@ -2,7 +2,7 @@
 // <title>, description, canonical, social tags, JSON-LD and readable content,
 // plus sitemap.xml and robots.txt. React then takes over in the browser.
 import {readFileSync, writeFileSync, mkdirSync} from 'node:fs';
-import {projects, principles, socials, EMAIL, SITE, NAME, SCHOOL_SHORT, SCHOOL_FULL, focus} from '../src/data.ts';
+import {projects, principles, socials, EMAIL, SITE, NAME, SCHOOL_SHORT, SCHOOL_FULL } from '../src/data.ts';
 import {routeMeta, jsonLd, KEYWORDS} from '../src/seo.ts';
 
 const dist = new URL('../dist/', import.meta.url);
@@ -15,12 +15,12 @@ const bodies = {
   '/': () => `<h1>${NAME}</h1>
 <p>${NAME} is a student at ${SCHOOL_SHORT} in Singapore. He builds robots and software that helps people and works across finance, robotics and code.</p>
 <h2>What I care about</h2><ul>${principles.map((p) => `<li><strong>${esc(p.t)}.</strong> ${esc(p.d)}</li>`).join('')}</ul>
-<h2>Finance. Robotics. Code.</h2><ul>${focus.map((f) => `<li><strong>${esc(f.t)}.</strong> ${esc(f.line)} ${esc(f.proof)}</li>`).join('')}</ul>
+<p>His work sits where finance, robotics and code meet: markets and money, machines and sensors, and apps and websites built end to end.</p>
 <h2>Projects</h2><ul>${projects.map((p) => `<li>${link(`/work/${p.slug}`, p.title)}: ${esc(p.kicker)} (${p.year})</li>`).join('')}</ul>`,
   '/work': () => `<h1>Projects by ${NAME}</h1><ul>${projects.map((p) => `<li>${link(`/work/${p.slug}`, p.title)}: ${esc(p.kicker)}. ${esc(p.body)}</li>`).join('')}</ul>`,
   '/info': () => `<h1>About ${NAME}</h1>
 <p>${NAME} is a student builder and creative developer from Singapore, studying at ${SCHOOL_SHORT}. He builds software, hardware and everything in between, and cares about design, detail and technology that is genuinely useful.</p>
-<ul>${focus.map((f) => `<li><strong>${esc(f.t)}:</strong> ${esc(f.proof)}</li>`).join('')}</ul>
+<p>His work sits where finance, robotics and code meet.</p>
 `,
   '/contact': () => `<h1>Contact ${NAME}</h1><p>Based in Singapore. Email <a href="mailto:${EMAIL}">${EMAIL}</a>.</p><ul>${socials.map((s) => `<li>${link(s.href, s.label)}</li>`).join('')}</ul>`,
 };
