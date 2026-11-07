@@ -67,9 +67,17 @@ export default function StatueSeq({progress, from = 0.3, to = 0.8, end = 0.97}: 
     };
     const rect = (im: HTMLImageElement) => {
       const W = cv.width, H = cv.height;
-      const s = Math.min(W, H * 1.02) / im.width;
+      const s = Math.min(W * 1.1, H * 1.3) / im.width;
       const w = im.width * s, h = im.height * s;
       return {x: (W - w) / 2, y: (H - h) / 2, w, h};
+    };
+    /* soft radial falloff so the footage melts into the dark instead of sitting in a square */
+    const fe = document.createElement('canvas'); fe.width = fe.height = 256;
+    { const f = fe.getContext('2d')!, g = f.createRadialGradient(128, 128, 0, 128, 128, 128);
+      g.addColorStop(0, '#000'); g.addColorStop(0.55, '#000'); g.addColorStop(0.85, 'rgba(0,0,0,.35)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+      f.fillStyle = g; f.fillRect(0, 0, 256, 256); }
+    const feather = (c: CanvasRenderingContext2D, r: {x: number; y: number; w: number; h: number}) => {
+      c.globalCompositeOperation = 'destination-in'; c.drawImage(fe, r.x, r.y, r.w, r.h); c.globalCompositeOperation = 'source-over';
     };
     const clear = () => { ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1; ctx.clearRect(0, 0, cv.width, cv.height); };
 
@@ -81,6 +89,7 @@ export default function StatueSeq({progress, from = 0.3, to = 0.8, end = 0.97}: 
       clear();
       const r = rect(im);
       ctx.drawImage(im, r.x, r.y, r.w, r.h);
+      feather(ctx, r);
     };
 
     const drawDust = (d: number) => {
@@ -99,6 +108,7 @@ export default function StatueSeq({progress, from = 0.3, to = 0.8, end = 0.97}: 
       t2.drawImage(im, r.x, r.y, r.w, r.h);
       t2.globalCompositeOperation = 'destination-in'; t2.imageSmoothingEnabled = true;
       t2.drawImage(mask!, r.x, r.y, r.w, r.h);
+      feather(t2, r);
       ctx.drawImage(tc, 0, 0);
       // the grains themselves: drift up and away on the wind, shrink, thin out
       ctx.globalCompositeOperation = 'source-over';
