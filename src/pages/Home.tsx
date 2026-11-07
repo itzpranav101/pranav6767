@@ -1,10 +1,9 @@
 import {useEffect, useLayoutEffect, useRef, useState, type MouseEvent} from 'react';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
-import {Link, Roll, Split, reduced, smooth} from '../motion';
+import {Link, Roll, Split, nav, reduced, smooth} from '../motion';
 import {B, EMAIL, SCHOOL_SHORT, projects, socials} from '../data';
-import Thumb from '../Thumb';
-import Cubes from '../Cubes';
+import Thumb, {Title} from '../Thumb';
 import StatueSeq from '../StatueSeq';
 
 function Arrow({className}: {className?: string}) {
@@ -15,6 +14,8 @@ export default function Home({ready}: {ready: boolean}) {
   const root = useRef<HTMLDivElement>(null);
   const prog = useRef(0);
   const list = projects;
+  const [active, setActive] = useState(0);
+  const cur = list[active];
 
   useLayoutEffect(() => {
     if (reduced) return;
@@ -53,6 +54,29 @@ export default function Home({ready}: {ready: boolean}) {
       /* parallax on the two feature images */
       qa('.plx-img').forEach((img) => gsap.fromTo(img, {yPercent: -8, scale: 1.2}, {yPercent: 8, scale: 1.2, ease: 'none', scrollTrigger: {trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: true}}));
 
+      /* projects: list scrolls, preview swaps, ribbon draws, rail fills */
+      const items = qa('.plist li');
+      const ribbon = q('.ribbon path') as unknown as SVGPathElement;
+      gsap.set(ribbon, {strokeDasharray: 1, strokeDashoffset: 1});
+      let last = -1;
+      ScrollTrigger.create({
+        trigger: q('.proj-sec'), start: 'top top', end: 'bottom bottom', scrub: true,
+        onUpdate: (self) => {
+          const pos = self.progress * (items.length - 1);
+          const H = items[0].offsetHeight;
+          q('.plist').style.transform = `translate3d(0, ${-pos * H}px, 0)`;
+          items.forEach((li, i) => {
+            const d = i - pos;
+            li.style.opacity = String(Math.max(0.16, 1 - Math.abs(d) * 0.6));
+            li.style.transform = `translate3d(${Math.abs(d) * 26 + d * 6}px,0,0)`;
+          });
+          const idx = Math.round(pos);
+          if (idx !== last) { last = idx; setActive(idx); }
+          ribbon.style.strokeDashoffset = String(1 - Math.min(1, self.progress * 1.6 + 0.05));
+          q('.p-bar').style.transform = `scaleY(${self.progress})`;
+        },
+      });
+
       /* circle gallery */
       const cg = qa('.cg-img');
       const place = (p: number) => {
@@ -76,7 +100,8 @@ export default function Home({ready}: {ready: boolean}) {
       const grow = () => Math.hypot(innerWidth, innerHeight) / blob.offsetWidth * 1.15;
       gsap.timeline({scrollTrigger: {trigger: q('.contact-sec'), start: 'top top', end: 'bottom bottom', scrub: 0.6}, defaults: {ease: 'none'}})
         .fromTo(blob, {scale: 0.2}, {scale: grow, duration: 0.5, ease: 'power2.in'}, 0)
-        .fromTo('.c-in', {opacity: 0, y: 60}, {opacity: 1, y: 0, duration: 0.25}, 0.5);
+        .fromTo('.c-in', {opacity: 0, y: 60}, {opacity: 1, y: 0, duration: 0.25}, 0.5)
+        .fromTo('.c-shot img', {scale: 1.25}, {scale: 1, duration: 0.5}, 0.5);
 
     }, el);
     const refresh = () => ScrollTrigger.refresh();
@@ -84,6 +109,7 @@ export default function Home({ready}: {ready: boolean}) {
     return () => ctx.revert();
   }, [ready]);
 
+  const go = (slug: string) => (e: MouseEvent) => { e.preventDefault(); nav.go(`/work/${slug}`); };
   const jumpTo = (id: string) => (e: MouseEvent) => {
     e.preventDefault();
     const t = document.getElementById(id);
@@ -108,7 +134,9 @@ export default function Home({ready}: {ready: boolean}) {
           <div className="lead-veil" aria-hidden="true" />
           <div className="shade" />
           <div className="hero-foot">
-            <a href="#about" className="cue" onClick={jumpTo('about')} aria-label="Scroll to explore"><i aria-hidden="true" />Scroll</a>
+            <a href="#about" className="hf-l" onClick={jumpTo('about')} aria-label="Scroll to explore"><Arrow className="ar" />SG 2026</a>
+            <span className="hf-c">{socials.map((x, i) => <span key={x.href}>{i > 0 && <i>/</i>}<a href={x.href} target="_blank" rel="noreferrer"><Roll>{x.label}</Roll></a></span>)}</span>
+            <span className="hf-r"><Link to="/work"><Roll>Projects</Roll></Link><Link to="/info"><Roll>About</Roll></Link><a href="#contact" onClick={jumpTo('contact')}><Roll>Contact</Roll></a></span>
           </div>
         </div>
       </section>
@@ -124,11 +152,29 @@ export default function Home({ready}: {ready: boolean}) {
         </div>
       </section>
 
-      {/* 5 · projects: a cube to swipe through, names and pictures only */}
-      <section id="projects" className="home-cubes">
-        <Split as="h2" className="hc-h">Things I&rsquo;ve <em>made.</em></Split>
-        <Cubes items={list} />
-        <Link to="/work" className="tlink hc-all" aria-label="All projects"><Roll>All projects</Roll> <Arrow className="ar" /></Link>
+      {/* 5 · projects: names roll past a ribbon, the preview swaps beside them */}
+      <section id="projects" className="proj-sec" style={{height: `${list.length * 34 + 90}vh`}}>
+        <div className="stage pstage">
+          <svg className="ribbon" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+            <path pathLength={1} d="M-60 -40 C 120 -20 760 -120 640 150 C 560 330 120 380 110 640 C 100 860 260 900 330 980" />
+          </svg>
+          <h2 className="sr">Projects</h2>
+          <span className="p-count">({String(list.length).padStart(2, '0')})</span>
+          <ul className="plist">
+            {list.map((p, i) => (
+              <li key={p.slug} className={i === active ? 'on' : ''}>
+                <a href={`/work/${p.slug}`} onClick={go(p.slug)} data-cursor="view" data-cursor-label="View"><Title p={p} /></a>
+              </li>
+            ))}
+          </ul>
+          <a className="pv" href={`/work/${cur.slug}`} onClick={go(cur.slug)} data-cursor="view" data-cursor-label="View" aria-label={`Open ${cur.title}`}>
+            <span className="pv-top"><span>{cur.year}</span><span>Preview</span></span>
+            <span className="pv-frame">
+              {list.map((p, i) => <Thumb key={p.slug} p={p} play={i === active} className={i === active ? 'on' : ''} />)}
+            </span>
+          </a>
+          <div className="p-rail" aria-hidden="true"><i className="p-bar" /><span>Projects</span></div>
+        </div>
       </section>
 
       {/* 6 · circle gallery */}
@@ -139,16 +185,20 @@ export default function Home({ready}: {ready: boolean}) {
         </div>
       </section>
 
-      {/* 7 · contact: white circle takes over */}
+      {/* 7 · contact: a pale sheet takes over, big type, two framed stills */}
       <section id="contact" className="contact-sec" style={{height: '200vh'}}>
         <div className="stage cstage">
           <div className="blob" />
           <div className="c-in">
-            <p className="c-tiny">Contact</p>
-            <h2 className="c-big">Let&rsquo;s build <em>together.</em></h2>
-            <p className="c-p">Work on dementia care, urban farming, robotics or student startups? Or want to compare notes? Write to me.</p>
-            <a className="c-mail mag" href={`mailto:${EMAIL}`} aria-label={EMAIL} data-cursor="mail" data-cursor-label="Write"><Roll>{EMAIL}</Roll></a>
-            <ul className="c-soc">{socials.map((s) => <li key={s.href}><a href={s.href} target="_blank" rel="noreferrer" aria-label={s.label}><Roll>{s.label}</Roll></a></li>)}</ul>
+            <h2 className="c-big">Contact</h2>
+            <p className="c-note">Always keen to join a driven team and build things people actually use.</p>
+            <figure className="c-shot c-shot1"><img src={`${B}img/seq/f046.webp`} alt="" /><i className="rm tl" /><i className="rm tr" /></figure>
+            <figure className="c-shot c-shot2"><img src={`${B}img/seq/f022.webp`} alt="" /><i className="rm tl" /><i className="rm tr" /></figure>
+            <p className="c-avail">I&rsquo;m open to <em>internships, collaborations</em> and <em>ambitious projects</em> anywhere in the world.</p>
+            <div className="c-links">
+              <ul>{socials.map((s) => <li key={s.href}><a href={s.href} target="_blank" rel="noreferrer"><Roll>{s.label}</Roll></a></li>)}</ul>
+              <a className="c-mail" href={`mailto:${EMAIL}`} data-cursor="mail" data-cursor-label="Write"><Roll>{EMAIL}</Roll></a>
+            </div>
           </div>
         </div>
       </section>

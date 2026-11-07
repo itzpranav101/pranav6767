@@ -15,24 +15,29 @@ float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*n(p);p=p*2.03+vec2(1
 void main(){
   vec2 uv=gl_FragCoord.xy/r;
   float asp=r.x/r.y;
-  // tall soft vertical lobes: stretch noise along y
-  vec2 p=vec2((uv.x-.5)*asp*1.5+(m.x-.5)*.35, (uv.y-.5)*.42);
-  vec2 q=vec2(fbm(p*1.1+vec2(0.,t*.035)),fbm(p*1.1+vec2(4.3,1.7)-t*.03));
-  float f=fbm(p*1.3+2.2*q+vec2(t*.02,0.));
-  vec3 c=mix(c0,c1,smoothstep(.22,.62,f));
-  c=mix(c,c2,smoothstep(.45,.82,f)*smoothstep(.15,.9,uv.y+q.x*.3));
-  c=mix(c,c3,smoothstep(.72,.97,f)*.38*smoothstep(.3,1.,uv.y));
-  float vig=smoothstep(.0,.55,uv.y)*.85+.15;
-  c*=vig*dim;
+  // big soft out-of-focus blobs, heaviest across the top, falling to near black lower left
+  vec2 p=vec2((uv.x-.5)*asp*.9+(m.x-.5)*.25, (uv.y-.5)*.9+(m.y-.5)*.12);
+  vec2 q=vec2(fbm(p*.9+vec2(0.,t*.03)),fbm(p*.9+vec2(4.3,1.7)-t*.025));
+  float f=fbm(p*.8+1.6*q+vec2(t*.015,0.));
+  float lift=uv.y*.75+uv.x*.18-.28;
+  float body=smoothstep(.28,.74,f+lift*.65);
+  vec3 c=mix(c0,c1,body);
+  float core=smoothstep(.5,.92,f+lift*.6);
+  c=mix(c,c2,core);
+  // gentle white haze where the light is strongest
+  float glow=smoothstep(.74,1.06,f+lift*.6+q.y*.2);
+  c=mix(c,c3,glow*.26);
+  c+=c3*.035*smoothstep(.5,1.,q.x)*uv.y;
+  c*=dim;
   gl_FragColor=vec4(c,1.);
 }`;
 
 type Pal = {c: number[]; dim: number};
 // black, deep navy, royal navy, soft white-blue glint
 export const PALETTES: Pal[] = [
-  {c: [.006, .008, .022, .02, .038, .13, .04, .08, .26, .40, .46, .74], dim: 1},
-  {c: [.006, .008, .022, .016, .03, .11, .034, .068, .22, .36, .42, .68], dim: 1},
-  {c: [.006, .008, .022, .02, .04, .135, .044, .086, .27, .42, .48, .76], dim: 1},
+  {c: [.01, .011, .018, .022, .04, .16, .07, .13, .45, .8, .84, .97], dim: 1},
+  {c: [.012, .013, .02, .028, .05, .18, .08, .15, .5, .74, .78, .92], dim: 1},
+  {c: [.012, .013, .02, .032, .058, .21, .095, .18, .57, .8, .84, .96], dim: 1},
 ];
 
 export default function Gradient({variant, dim}: {variant: number; dim: number}) {
