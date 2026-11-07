@@ -463,13 +463,21 @@ sup.tm { font: 500 .3em/1 var(--sans); letter-spacing: .04em; vertical-align: to
 .c-links li a { font: 600 clamp(24px, 2vw, 36px)/1.1 var(--display); letter-spacing: -.02em; }
 .c-mail { display: inline-flex; font: 400 clamp(16px, 1.3vw, 22px)/1 var(--sans); background: none; color: inherit; padding: 0; border-radius: 0; }
 @media (max-width: 760px) {
-  .c-big { left: 20px; top: 15%; font-size: 21vw; }
-  .c-note { left: 20px; top: 28%; width: 60vw; text-align: left; }
-  .c-shot1 { width: 34vw; height: 16vh; top: 9%; }
+  .c-in { display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: calc(var(--nav-h) + 24px) 20px 28px; }
+  .c-in > * { position: static !important; width: auto !important; height: auto !important; }
+  .c-in > .c-shot2 { position: relative !important; left: auto; right: auto; bottom: auto; top: auto; align-self: stretch; width: 100% !important; }
+  .c-in { align-items: flex-start; }
+  .c-big { font-size: 22vw; line-height: .9; }
+  .c-note { order: 1; max-width: 30ch; font-size: 16px; }
   .c-shot1 { display: none; }
-  .c-shot2 { left: auto; right: 0; width: 46vw; height: 30vh; }
-  .c-avail { right: auto; left: 20px; top: 42%; width: 70vw; text-align: left; }
-  .c-links { left: 20px; bottom: 7%; }
+  .c-shot2 { order: 2; aspect-ratio: 16 / 10; border-radius: 14px; margin: 4px 0 !important; }
+  .c-shot2 img { object-position: 50% 30%; }
+  .c-avail { order: 3; font-size: 18px; max-width: 28ch; }
+  .c-links { order: 4; display: flex; flex-direction: column; gap: 6px; }
+  .c-links ul { display: flex; gap: 22px; margin: 0 0 8px; }
+  .c-links li a { font-size: 24px; }
+  .c-mail { font-size: 17px; text-decoration: underline; text-underline-offset: 4px; }
+}
 }
 
 /* ---- hero foot (v2): year left, socials centre, pages right ---- */
@@ -484,3 +492,16 @@ sup.tm { font: 500 .3em/1 var(--sans); letter-spacing: .04em; vertical-align: to
   .hf-c { order: 3; width: 100%; justify-content: center; }
   .hf-r { gap: 16px; }
 }
+@media (max-width: 760px) {
+  .ribbon path { stroke-width: 34; opacity: .75; }
+  .plist { --ih: 64px; left: 50px; top: calc(30% - var(--ih) / 2); }
+  .plist a { font-size: 30px; }
+  .plist li { border-bottom: 0; }
+  .p-count { top: 30%; }
+  .pv { z-index: 4; bottom: 0; padding: 70px 0 6vh; background: linear-gradient(to bottom, rgba(7,8,13,0), #07080d 60px); left: 0; right: 0; }
+  .pv-top, .pv-frame { margin: 0 24px 0 50px; }
+  .pv-frame { border-radius: 12px; }
+}
+
+.pv { transition: opacity .45s, transform .45s; }
+.pv.none { opacity: 0 !important; transform: translateY(14px); pointer-events: none; }

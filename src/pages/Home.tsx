@@ -167,10 +167,10 @@ export default function Home({ready}: {ready: boolean}) {
               </li>
             ))}
           </ul>
-          <a className="pv" href={`/work/${cur.slug}`} onClick={go(cur.slug)} data-cursor="view" data-cursor-label="View" aria-label={`Open ${cur.title}`}>
+          <a className={`pv${cur.media ? '' : ' none'}`} href={`/work/${cur.slug}`} onClick={go(cur.slug)} data-cursor="view" data-cursor-label="View" aria-label={`Open ${cur.title}`}>
             <span className="pv-top"><span>{cur.year}</span><span>Preview</span></span>
             <span className="pv-frame">
-              {list.map((p, i) => <Thumb key={p.slug} p={p} play={i === active} className={i === active ? 'on' : ''} />)}
+              {list.filter((p) => p.media).map((p) => <Thumb key={p.slug} p={p} play={p === cur} className={p === cur ? 'on' : ''} />)}
             </span>
           </a>
           <div className="p-rail" aria-hidden="true"><i className="p-bar" /><span>Projects</span></div>
