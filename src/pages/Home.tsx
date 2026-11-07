@@ -100,8 +100,7 @@ export default function Home({ready}: {ready: boolean}) {
       const grow = () => Math.hypot(innerWidth, innerHeight) / blob.offsetWidth * 1.15;
       gsap.timeline({scrollTrigger: {trigger: q('.contact-sec'), start: 'top top', end: 'bottom bottom', scrub: 0.6}, defaults: {ease: 'none'}})
         .fromTo(blob, {scale: 0.2}, {scale: grow, duration: 0.5, ease: 'power2.in'}, 0)
-        .fromTo('.c-in', {opacity: 0, y: 60}, {opacity: 1, y: 0, duration: 0.25}, 0.5)
-        .fromTo('.c-shot img', {scale: 1.25}, {scale: 1, duration: 0.5}, 0.5);
+        .fromTo('.c-in', {opacity: 0, y: 60}, {opacity: 1, y: 0, duration: 0.25}, 0.5);
 
     }, el);
     const refresh = () => ScrollTrigger.refresh();
@@ -190,15 +189,11 @@ export default function Home({ready}: {ready: boolean}) {
         <div className="stage cstage">
           <div className="blob" />
           <div className="c-in">
-            <h2 className="c-big">Contact</h2>
-            <p className="c-note">Always keen to join a driven team and build things people actually use.</p>
-            <figure className="c-shot c-shot1"><img src={`${B}img/seq/f046.webp`} alt="" /><i className="rm tl" /><i className="rm tr" /></figure>
-            <figure className="c-shot c-shot2"><img src={`${B}img/seq/f022.webp`} alt="" /><i className="rm tl" /><i className="rm tr" /></figure>
-            <p className="c-avail">I&rsquo;m open to <em>internships, collaborations</em> and <em>ambitious projects</em> anywhere in the world.</p>
-            <div className="c-links">
-              <ul>{socials.map((s) => <li key={s.href}><a href={s.href} target="_blank" rel="noreferrer"><Roll>{s.label}</Roll></a></li>)}</ul>
-              <a className="c-mail" href={`mailto:${EMAIL}`} data-cursor="mail" data-cursor-label="Write"><Roll>{EMAIL}</Roll></a>
-            </div>
+            <p className="c-kick">Contact</p>
+            <h2 className="c-big">Let&rsquo;s build <em>something</em> <span>worth</span> <em>remembering.</em></h2>
+            <p className="c-avail">Open to <em>internships</em>, <em>collaborations</em> and <em>ambitious projects</em>, anywhere in the world.</p>
+            <a className="c-mail" href={`mailto:${EMAIL}`} data-cursor="mail" data-cursor-label="Write">{EMAIL}<Arrow className="ar" /></a>
+            <ul className="c-links">{socials.map((x) => <li key={x.href}><a href={x.href} target="_blank" rel="noreferrer"><span>{x.label}</span><Arrow className="ar" /></a></li>)}</ul>
           </div>
         </div>
       </section>
