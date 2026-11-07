@@ -2,7 +2,7 @@ import {useEffect, useLayoutEffect, useRef, useState, type MouseEvent} from 'rea
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import {Link, Roll, Split, reduced, smooth} from '../motion';
-import {B, EMAIL, SCHOOL_SHORT, focus, manifesto, projects, socials} from '../data';
+import {B, EMAIL, SCHOOL_SHORT, projects, socials} from '../data';
 import Thumb from '../Thumb';
 import Cubes from '../Cubes';
 import StatueSeq from '../StatueSeq';
@@ -117,34 +117,10 @@ export default function Home({ready}: {ready: boolean}) {
         <div className="about-grid">
           <div className="about-text">
             <Split as="h2" className="about-big">As a <em>student builder</em>, I make robots and software that keep people in charge of their own day, blending care and <em>precision.</em></Split>
-            <p className="about-small" data-r>Student builder and creative developer from Singapore, studying at {SCHOOL_SHORT}. Passionate about design, hardware and the details nobody notices, I&rsquo;m always chasing the point where technology stops being noticed and starts being useful.</p>
+            <p className="about-small" data-r>Student builder from Singapore, studying at {SCHOOL_SHORT}. I work across finance, robotics and code: competing in the Wharton investment competition, building sensors that live in the soil, and shipping apps and websites end to end.</p>
             <Link to="/info" className="tlink" data-r aria-label="More about me"><Roll>More about me</Roll> <Arrow className="ar" /></Link>
           </div>
         </div>
-      </section>
-
-      {/* 3 · belief */}
-      <section id="manifesto" className="manifesto">
-        {manifesto.map(([a, b, c], i) => (
-          <Split as="p" className="mani" key={i}>{a}<em>{b}</em>{c}</Split>
-        ))}
-      </section>
-
-      {/* 4 · what I work on */}
-      <section id="focus" className="focus-sec">
-        <Split as="h2" className="fx-h">Finance. Robotics. <em>Code.</em></Split>
-        <ol className="fx-list">
-          {focus.map((f, i) => (
-            <li key={f.t} data-r>
-              <span className="fx-n">0{i + 1}</span>
-              <div>
-                <h3>{f.t}</h3>
-                <p className="fx-line">{f.line}</p>
-                <p className="fx-proof">{f.proof}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
       </section>
 
       {/* 5 · projects: a cube to swipe through, names and pictures only */}
