@@ -126,13 +126,6 @@ export const imgOf = (p: Project) => p.media?.card ?? `${B}img/art/${p.slug}.jpg
 export const catLabel = (p: Project) => p.cat.toUpperCase();
 
 
-/** Reflective copy. Edit with real details (years played, pieces, exams) when ready. */
-export const violin = {
-  label: 'Violin',
-  line: 'Practice is a promise to your future self.',
-  body: 'Away from screens I play the violin. It teaches what building also asks for: patience, a good ear, and the willingness to repeat the same few bars until they feel true. Nothing on a string can be faked, and I try to build things the same way.',
-  tags: ['Patience', 'Listening', 'Repetition'],
-};
 
 export const manifesto: [string, string, string][] = [
   ['', 'Build small.', ' Build true.'],
@@ -140,9 +133,10 @@ export const manifesto: [string, string, string][] = [
   ['Say only what you have ', 'measured.', ''],
 ];
 
-export const violinLessons: [string, string][] = [
-  ['Patience', 'Slow is how it becomes smooth.'],
-  ['Listening', 'You fix what you can hear is off, not what you hoped was right.'],
-  ['Repetition', 'The same few bars, again, until they are true.'],
+
+/** What Pranav works on. Each line points at something real he has done. */
+export const focus: {t: string; line: string; proof: string}[] = [
+  {t: 'Finance', line: 'Markets, money and how decisions compound.', proof: 'Competing in the Wharton Global High School Investment Competition, and built FinFlow Academy to teach students finance.'},
+  {t: 'Robotics', line: 'Machines that touch the real world.', proof: 'RootStake puts a probe, two stem needles and an ESP32 into a plant pot and streams it all to a phone.'},
+  {t: 'Code', line: 'Apps and the web, end to end.', proof: 'SwiftUI and Kotlin on phones, React and TypeScript on the web: Meco, ROOTED SG, LinguaBomb.'},
 ];
-export const violinClose = 'Build like you practise: a little every day, and honestly.';

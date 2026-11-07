@@ -2,7 +2,7 @@ import {useEffect, useLayoutEffect, useRef, useState, type MouseEvent} from 'rea
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import {Link, Roll, Split, reduced, smooth} from '../motion';
-import {B, EMAIL, SCHOOL_SHORT, manifesto, projects, socials, violin} from '../data';
+import {B, EMAIL, SCHOOL_SHORT, focus, manifesto, projects, socials} from '../data';
 import Thumb from '../Thumb';
 import Cubes from '../Cubes';
 import StatueSeq from '../StatueSeq';
@@ -42,7 +42,7 @@ export default function Home({ready}: {ready: boolean}) {
         .fromTo('.reveal', {clipPath: 'inset(50% 50% 50% 50% round 18px)'}, {clipPath: framed, duration: 0.34, ease: 'power2.inOut'}, 0.02)
         .to('.hero .name', {opacity: 0, scale: 1.04, duration: 0.12}, 0.2)
         .fromTo('.reveal .rm', {opacity: 0}, {opacity: 1, duration: 0.06}, 0.32)
-        .fromTo('.hero .lead .li', {yPercent: 110}, {yPercent: 0, duration: 0.1, stagger: 0.015, ease: 'power2.out'}, 0.36)
+        .fromTo('.hero .lead .li', {yPercent: 110}, {yPercent: 0, duration: 0.1, stagger: 0.006, ease: 'power2.out'}, 0.34)
         .fromTo('.hero .lead-veil', {opacity: 0}, {opacity: 1, duration: 0.1}, 0.34)
         .to('.hero .lead .li', {yPercent: -110, duration: 0.05, stagger: 0.008}, 0.84)
         .to('.reveal .rm', {opacity: 0, duration: 0.04}, 0.84)
@@ -88,8 +88,8 @@ export default function Home({ready}: {ready: boolean}) {
     const t = document.getElementById(id);
     if (smooth.lenis) smooth.lenis.scrollTo(t ?? 0, {duration: 1.6}); else t?.scrollIntoView({behavior: reduced ? 'auto' : 'smooth'});
   };
-  const LEAD = 'Alea iacta est.';
-  const LEAD_BY = 'The die is cast · Julius Caesar';
+  const LEAD = 'The people who are crazy enough to think they can change the world are the ones who do.';
+  const LEAD_BY = 'Think Different · Apple, 1997';
   const leadWords = LEAD.split(' ');
 
   return (
@@ -130,16 +130,21 @@ export default function Home({ready}: {ready: boolean}) {
         ))}
       </section>
 
-      {/* 4 · violin */}
-      <section id="violin" className="violin-sec">
-        <div className="vs-grid">
-          <div className="vs-text">
-            <Split as="h2" className="vs-big">{violin.line}</Split>
-            <p className="vs-p" data-r>{violin.body}</p>
-            <ul className="vs-tags" data-r>{violin.tags.map((t) => <li key={t}>{t}</li>)}</ul>
-            <Link to="/violin" className="tlink" data-r aria-label="More about the violin"><Roll>More about the violin</Roll> <Arrow className="ar" /></Link>
-          </div>
-        </div>
+      {/* 4 · what I work on */}
+      <section id="focus" className="focus-sec">
+        <Split as="h2" className="fx-h">Finance. Robotics. <em>Code.</em></Split>
+        <ol className="fx-list">
+          {focus.map((f, i) => (
+            <li key={f.t} data-r>
+              <span className="fx-n">0{i + 1}</span>
+              <div>
+                <h3>{f.t}</h3>
+                <p className="fx-line">{f.line}</p>
+                <p className="fx-proof">{f.proof}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </section>
 
       {/* 5 · projects: a cube to swipe through, names and pictures only */}

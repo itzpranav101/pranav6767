@@ -400,3 +400,18 @@ sup.tm { font: 500 .3em/1 var(--sans); letter-spacing: .04em; vertical-align: to
 .vp-grid { max-width: 980px; }
 .hero .lead { font-size: clamp(44px, 9vw, 120px); }
 .hero .lead-by { font-size: 14px; }
+
+/* ---- finance / robotics / code ---- */
+.focus-sec { background: var(--bg); position: relative; padding: clamp(50px, 9vw, 130px) var(--pad); }
+.fx-h { font: 300 clamp(40px, 8vw, 110px)/1 var(--display); letter-spacing: -.045em; max-width: 1200px; margin: 0 auto clamp(26px, 4vw, 50px); }
+.fx-h em { color: var(--glint); }
+.fx-list { max-width: 1200px; margin: 0 auto; display: grid; }
+.fx-list li { display: grid; grid-template-columns: 54px 1fr; gap: 8px; padding: clamp(20px, 3vw, 34px) 0; border-top: 1px solid var(--line); }
+.fx-list li:last-child { border-bottom: 1px solid var(--line); }
+.fx-n { font: 600 14px/2.4 var(--sans); color: var(--glint); }
+.fx-list h3 { font: 400 clamp(30px, 4.6vw, 58px)/1.02 var(--display); letter-spacing: -.04em; }
+.fx-line { font: italic 400 clamp(19px, 2vw, 26px)/1.3 var(--serif); color: var(--glint); margin: 8px 0 6px; }
+.fx-proof { font-size: 16px; line-height: 1.6; max-width: 56ch; }
+@media (min-width: 900px) { .fx-list li > div { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6px 40px; align-items: baseline; } .fx-list h3 { grid-row: span 2; } }
+.hero .lead { font-size: clamp(28px, 5vw, 70px); padding: 0 9vw; }
+@media (max-width: 760px) { .hero .lead { font-size: clamp(26px, 7.4vw, 38px); padding: 0 10vw; } }

@@ -2,27 +2,26 @@
 // <title>, description, canonical, social tags, JSON-LD and readable content,
 // plus sitemap.xml and robots.txt. React then takes over in the browser.
 import {readFileSync, writeFileSync, mkdirSync} from 'node:fs';
-import {projects, principles, socials, EMAIL, SITE, NAME, SCHOOL_SHORT, SCHOOL_FULL, violin, violinLessons, violinClose} from '../src/data.ts';
+import {projects, principles, socials, EMAIL, SITE, NAME, SCHOOL_SHORT, SCHOOL_FULL, focus} from '../src/data.ts';
 import {routeMeta, jsonLd, KEYWORDS} from '../src/seo.ts';
 
 const dist = new URL('../dist/', import.meta.url);
 const tpl = readFileSync(new URL('index.html', dist), 'utf8');
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 const link = (href, text) => `<a href="${href}">${esc(text)}</a>`;
-const nav = `<nav aria-label="Primary">${link('/', 'Home')} ${link('/work', 'Projects')} ${link('/info', 'About')} ${link('/violin', 'Violin')} ${link('/contact', 'Contact')}</nav>`;
+const nav = `<nav aria-label="Primary">${link('/', 'Home')} ${link('/work', 'Projects')} ${link('/info', 'About')} ${link('/contact', 'Contact')}</nav>`;
 
 const bodies = {
   '/': () => `<h1>${NAME}</h1>
-<p>${NAME} is a student at ${SCHOOL_SHORT} in Singapore. He builds robots and software that helps people, plays the violin, and cares about care, detail and restraint.</p>
+<p>${NAME} is a student at ${SCHOOL_SHORT} in Singapore. He builds robots and software that helps people and works across finance, robotics and code.</p>
 <h2>What I care about</h2><ul>${principles.map((p) => `<li><strong>${esc(p.t)}.</strong> ${esc(p.d)}</li>`).join('')}</ul>
-<h2>${esc(violin.label)}</h2><p>${esc(violin.line)} ${esc(violin.body)}</p>
+<h2>Finance. Robotics. Code.</h2><ul>${focus.map((f) => `<li><strong>${esc(f.t)}.</strong> ${esc(f.line)} ${esc(f.proof)}</li>`).join('')}</ul>
 <h2>Projects</h2><ul>${projects.map((p) => `<li>${link(`/work/${p.slug}`, p.title)}: ${esc(p.kicker)} (${p.year})</li>`).join('')}</ul>`,
   '/work': () => `<h1>Projects by ${NAME}</h1><ul>${projects.map((p) => `<li>${link(`/work/${p.slug}`, p.title)}: ${esc(p.kicker)}. ${esc(p.body)}</li>`).join('')}</ul>`,
   '/info': () => `<h1>About ${NAME}</h1>
 <p>${NAME} is a student builder and creative developer from Singapore, studying at ${SCHOOL_SHORT}. He builds software, hardware and everything in between, and cares about design, detail and technology that is genuinely useful.</p>
-<p>${esc(violin.body)}</p>
+<ul>${focus.map((f) => `<li><strong>${esc(f.t)}:</strong> ${esc(f.proof)}</li>`).join('')}</ul>
 `,
-  '/violin': () => `<h1>Violin</h1><p>${esc(violin.line)}</p><p>${esc(violin.body)}</p><ul>${violinLessons.map(([a, b]) => `<li><strong>${esc(a)}.</strong> ${esc(b)}</li>`).join('')}</ul><p>${esc(violinClose)}</p>`,
   '/contact': () => `<h1>Contact ${NAME}</h1><p>Based in Singapore. Email <a href="mailto:${EMAIL}">${EMAIL}</a>.</p><ul>${socials.map((s) => `<li>${link(s.href, s.label)}</li>`).join('')}</ul>`,
 };
 for (const p of projects) bodies[`/work/${p.slug}`] = () => `<h1>${esc(p.title)}</h1><p>${esc(p.kicker)} (${p.year}, ${p.cat})</p><p>${esc(p.body)}</p><p>${esc(p.detail)}</p><p>Built with ${esc(p.stack.join(', '))}.</p>${p.links.length ? `<ul>${p.links.map((l) => `<li>${link(l.href, l.label)}</li>`).join('')}</ul>` : ''}<p>${link('/work', 'All projects')}</p>`;

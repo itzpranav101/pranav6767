@@ -10,7 +10,6 @@ import Work from './pages/Work';
 import ProjectPage from './pages/ProjectPage';
 import Info from './pages/Info';
 import Contact from './pages/Contact';
-import Violin from './pages/Violin';
 
 const pathNow = () => location.pathname.replace(/\/+$/, '') || '/';
 
@@ -28,7 +27,7 @@ const labelFor = (to: string) => {
   const s = to.split('/').filter(Boolean);
   if (!s.length) return 'Home';
   if (s[0] === 'work' && s[1]) return projects.find((p) => p.slug === s[1])?.title ?? 'Project';
-  return ({work: 'Projects', info: 'About', violin: 'Violin', contact: 'Contact'} as Record<string, string>)[s[0]] ?? 'Pranav';
+  return ({work: 'Projects', info: 'About', contact: 'Contact'} as Record<string, string>)[s[0]] ?? 'Pranav';
 };
 
 function setMeta(sel: string, attr: string, value: string) {
@@ -44,7 +43,6 @@ function Footer() {
         <ul className="f-col">
           <li><Link to="/work" aria-label="Projects"><Roll>Projects</Roll></Link></li>
           <li><Link to="/info" aria-label="About"><Roll>About</Roll></Link></li>
-          <li><Link to="/violin" aria-label="Violin"><Roll>Violin</Roll></Link></li>
           <li><Link to="/contact" aria-label="Contact"><Roll>Contact</Roll></Link></li>
         </ul>
       </div>
@@ -54,7 +52,7 @@ function Footer() {
   );
 }
 
-const NAV: [string, string][] = [['/work', 'Projects'], ['/info', 'About'], ['/violin', 'Violin'], ['/contact', 'Contact']];
+const NAV: [string, string][] = [['/work', 'Projects'], ['/info', 'About'], ['/contact', 'Contact']];
 
 export default function App() {
   const route = useRoute();
@@ -129,7 +127,6 @@ export default function App() {
   if (top === '') page = <Home ready={ready} />;
   else if (top === 'work') page = seg[1] ? <ProjectPage slug={seg[1]} /> : <Work />;
   else if (top === 'info') page = <Info />;
-  else if (top === 'violin') page = <Violin />;
   else if (top === 'contact') page = <Contact />;
   else page = <section className="page"><h1 className="ptitle2">Not found</h1><Link to="/" className="back">BACK</Link></section>;
 
