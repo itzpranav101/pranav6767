@@ -89,7 +89,7 @@ export default function Home({ready}: {ready: boolean}) {
     if (smooth.lenis) smooth.lenis.scrollTo(t ?? 0, {duration: 1.6}); else t?.scrollIntoView({behavior: reduced ? 'auto' : 'smooth'});
   };
   const LEAD = 'The people who are crazy enough to think they can change the world are the ones who do.';
-  const LEAD_BY = 'Think Different · Apple, 1997';
+  const LEAD_BY = '— Steve Jobs';
   const leadWords = LEAD.split(' ');
 
   return (
