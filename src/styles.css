@@ -94,7 +94,7 @@ a:focus-visible .rc > span { transform: translateY(-100%); }
 
 /* ---- solid dark sections ---- */
 .about, .proj-sec, .cg-sec, .skills, .awards, .footer { background: var(--bg); position: relative; }
-.about { padding: clamp(36px, 10vw, 200px) var(--pad) clamp(70px, 12vw, 200px); }
+.about { margin-top: -80lvh; z-index: 2; padding: clamp(36px, 10vw, 200px) var(--pad) clamp(70px, 12vw, 200px); }
 .about-grid { display: grid; gap: clamp(36px, 6vw, 90px); align-items: center; max-width: 1500px; margin: 0 auto; }
 
 .about-big { font: 300 clamp(28px, 4.2vw, 62px)/1.12 var(--display); letter-spacing: -.035em; margin: 22px 0 28px; max-width: 18em; }
@@ -265,6 +265,7 @@ a:focus-visible .rc > span { transform: translateY(-100%); }
   .info-page { padding-bottom: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .about { margin-top: 0; }
   .hero-wrap, .proj-sec, .cg-sec, .contact-sec { height: auto !important; }
   .stage { position: relative; height: auto; min-height: 80vh; }
   .reveal, .li { display: none; }
