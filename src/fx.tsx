@@ -38,11 +38,11 @@ export function Preloader({onReveal, onDone}: {onReveal: () => void; onDone: () 
     const num = {v: 0};
     const n = el.querySelector<HTMLElement>('.pre-n')!;
     const tl = gsap.timeline({onComplete: () => { document.body.style.overflow = ''; smooth.lenis?.start(); onDone(); }});
-    tl.fromTo(el.querySelectorAll('.pc'), {yPercent: 115}, {yPercent: 0, duration: 1, ease: 'expo.out', stagger: 0.04}, 0.15)
-      .to(num, {v: 100, duration: 1.5, ease: 'power2.inOut', onUpdate: () => { n.textContent = String(Math.round(num.v)).padStart(3, '0'); }}, 0.1)
-      .to(el.querySelectorAll('.pc'), {yPercent: -115, duration: 0.7, ease: 'expo.in', stagger: 0.02}, 1.75)
-      .add(onReveal, 2.15)
-      .to(el, {clipPath: 'inset(0% 0% 100% 0%)', duration: 1.15, ease: 'expo.inOut'}, 2.1);
+    tl.fromTo(el.querySelectorAll('.pc'), {yPercent: 115}, {yPercent: 0, duration: 0.6, ease: 'expo.out', stagger: 0.02}, 0.05)
+      .to(num, {v: 100, duration: 0.7, ease: 'power2.inOut', onUpdate: () => { n.textContent = String(Math.round(num.v)).padStart(3, '0'); }}, 0.1)
+      .to(el.querySelectorAll('.pc'), {yPercent: -115, duration: 0.4, ease: 'expo.in', stagger: 0.01}, 0.75)
+      .add(onReveal, 0.95)
+      .to(el, {clipPath: 'inset(0% 0% 100% 0%)', duration: 0.7, ease: 'expo.inOut'}, 0.9);
     return () => { tl.kill(); document.body.style.overflow = ''; };
   }, []);
   const chars = (s: string) => [...s].map((c, i) => <span className="pcw" key={i}><span className="pc">{c === ' ' ? ' ' : c}</span></span>);
