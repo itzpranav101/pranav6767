@@ -33,7 +33,7 @@ export default function Home({ready}: {ready: boolean}) {
       const q = (s: string) => el.querySelector<HTMLElement>(s)!;
       const qa = (s: string) => gsap.utils.toArray<HTMLElement>(s, el);
 
-      gsap.to(['.hero .blurb', '.hero .hero-foot'], {opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', stagger: 0.15, delay: 0.5, onUpdate() { if (prog.current > 0.005) { this.kill(); gsap.set(['.hero .blurb', '.hero .hero-foot'], {opacity: Math.max(0, 1 - prog.current / 0.06)}); } }});
+      gsap.to(['.hero .blurb', '.hero .hero-foot'], {opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.1, delay: 0.15, onUpdate() { if (prog.current > 0.005) { this.kill(); gsap.set(['.hero .blurb', '.hero .hero-foot'], {opacity: Math.max(0, 1 - prog.current / 0.06)}); } }});
 
       /* pinned hero: image grows from the middle to full bleed, intro line appears */
       const tl = gsap.timeline({scrollTrigger: {trigger: q('.hero-wrap'), start: 'top top', end: 'bottom bottom', scrub: 0.7, onUpdate: (s) => { prog.current = s.progress; }}, defaults: {ease: 'none'}});
