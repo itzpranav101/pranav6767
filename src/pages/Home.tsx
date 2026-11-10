@@ -45,11 +45,11 @@ export default function Home({ready}: {ready: boolean}) {
         .fromTo('.reveal .rm', {opacity: 0}, {opacity: 1, duration: 0.06}, 0.32)
         .fromTo('.hero .lead .li', {yPercent: 110}, {yPercent: 0, duration: 0.1, stagger: 0.006, ease: 'power2.out'}, 0.34)
         .fromTo('.hero .lead-veil', {opacity: 0}, {opacity: 1, duration: 0.1}, 0.34)
-        .to('.hero .lead .li', {yPercent: -110, duration: 0.05, stagger: 0.004}, 0.6)
-        .to('.hero .lead-veil', {opacity: 0, duration: 0.05}, 0.6)
-        .to('.reveal .rm', {opacity: 0, duration: 0.04}, 0.64)
-        .to('.reveal', {clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: 0.1, ease: 'power2.inOut'}, 0.64)
-        .fromTo('.hero .shade', {opacity: 0}, {opacity: 1, duration: 0.03}, 0.87);
+        .to('.hero .lead .li', {yPercent: -110, duration: 0.05, stagger: 0.004}, 0.68)
+        .to('.hero .lead-veil', {opacity: 0, duration: 0.05}, 0.68)
+        .to('.reveal .rm', {opacity: 0, duration: 0.04}, 0.72)
+        .to('.reveal', {clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: 0.1, ease: 'power2.inOut'}, 0.72)
+        .fromTo('.hero .shade', {opacity: 0}, {opacity: 1, duration: 0.03}, 0.91);
 
       /* parallax on the two feature images */
       qa('.plx-img').forEach((img) => gsap.fromTo(img, {yPercent: -8, scale: 1.2}, {yPercent: 8, scale: 1.2, ease: 'none', scrollTrigger: {trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: true}}));
@@ -125,7 +125,7 @@ export default function Home({ready}: {ready: boolean}) {
         <div className="hero stage">
           <p className="blurb">Student building robots, <em>and software that helps people,</em> through care, detail and restraint.</p>
           <Split as="h1" by="char" className="name">Pranav <em>Ramanathan.</em></Split>
-          <div className="reveal"><StatueSeq progress={prog} from={0.3} to={0.64} end={0.87} /><i className="rm tl" /><i className="rm tr" /><i className="rm bl" /><i className="rm br" /></div>
+          <div className="reveal"><StatueSeq progress={prog} from={0.26} to={0.72} end={0.91} /><i className="rm tl" /><i className="rm tr" /><i className="rm bl" /><i className="rm br" /></div>
           <p className="lead" aria-label={`${LEAD} ${LEAD_BY}`}>
             {leadWords.map((w, i) => <span className="lw" key={i}><span className="li">{w}</span></span>)}
             <span className="lw lead-by"><span className="li">{LEAD_BY}</span></span>
@@ -133,7 +133,7 @@ export default function Home({ready}: {ready: boolean}) {
           <div className="lead-veil" aria-hidden="true" />
           <div className="shade" />
           <div className="hero-foot">
-            <a href="#about" className="hf-l" onClick={jumpTo('about')} aria-label="Scroll to explore"><Arrow className="ar" />SG 2026</a>
+            <a href="#about" className="hf-l" onClick={jumpTo('about')} aria-label="Scroll to explore"><Arrow className="ar" />Scroll</a>
             <span className="hf-c">{socials.map((x, i) => <span key={x.href}>{i > 0 && <i>/</i>}<a href={x.href} target="_blank" rel="noreferrer"><Roll>{x.label}</Roll></a></span>)}</span>
             <span className="hf-r"><Link to="/work"><Roll>Projects</Roll></Link><Link to="/info"><Roll>About</Roll></Link><a href="#contact" onClick={jumpTo('contact')}><Roll>Contact</Roll></a></span>
           </div>
@@ -179,7 +179,7 @@ export default function Home({ready}: {ready: boolean}) {
       {/* 6 · circle gallery */}
       <section id="gallery" className="cg-sec" style={{height: '340vh'}}>
         <div className="stage cgstage">
-          {(() => { const pics = list.filter((p) => p.media).slice(0, 4), art = list.filter((p) => !p.media).slice(0, 4); return pics.flatMap((p, i) => [art[i], p]).filter(Boolean); })().map((p) => <Thumb key={p.slug} p={p} className="cg-img" />)}
+          {list.filter((p) => !p.media).map((p) => <Thumb key={p.slug} p={p} className="cg-img" />)}
           <p className="cg-phrase"><span>Each build is a chance to <em>learn</em>, to test an idea, and to keep the help <em>small.</em></span></p>
         </div>
       </section>
