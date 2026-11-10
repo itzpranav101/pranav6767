@@ -90,7 +90,8 @@ export default function Gradient({variant, dim}: {variant: number; dim: number})
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
     const ease = () => { for (let i = 0; i < 13; i++) { const d = target.current[i] - cur[i]; if (Math.abs(d) > 0.002) cur[i] += d * 0.06; else cur[i] = target.current[i]; } };
-    const loop = () => { ease(); mc.x += (mt.x - mc.x) * .04; mc.y += (mt.y - mc.y) * .04; draw(); raf = visible && !document.hidden ? requestAnimationFrame(loop) : 0; };
+    const hidden = () => { const hw = document.querySelector('.hero-wrap'); return !!hw && hw.getBoundingClientRect().bottom < -40; };
+    const loop = () => { if (hidden()) { raf = 0; return; } ease(); mc.x += (mt.x - mc.x) * .04; mc.y += (mt.y - mc.y) * .04; draw(); raf = visible && !document.hidden ? requestAnimationFrame(loop) : 0; };
     const kick = () => { if (!reduce && !raf && visible && !document.hidden) raf = requestAnimationFrame(loop); };
     snap.current = () => { if (reduce) { for (let i = 0; i < 13; i++) cur[i] = target.current[i]; draw(); } else kick(); };
     size(); draw(); kick();
@@ -99,7 +100,8 @@ export default function Gradient({variant, dim}: {variant: number; dim: number})
     const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; kick(); });
     io.observe(cv);
     document.addEventListener('visibilitychange', kick);
-    return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); document.removeEventListener('visibilitychange', kick); removeEventListener('pointermove', onMove); };
+    addEventListener('scroll', kick, {passive: true});
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); document.removeEventListener('visibilitychange', kick); removeEventListener('scroll', kick); removeEventListener('pointermove', onMove); };
   }, []);
   return <canvas ref={ref} className="gl" aria-hidden="true" />;
 }

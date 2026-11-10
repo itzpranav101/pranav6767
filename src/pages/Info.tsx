@@ -16,6 +16,7 @@ export default function Info() {
             <div><dt>Based in</dt><dd>Singapore</dd></div>
             <div><dt>School</dt><dd>{SCHOOL_SHORT}, Singapore</dd></div>
             <div><dt>Focus</dt><dd>Finance, robotics, code</dd></div>
+            <div><dt>Now</dt><dd>Building the RootStake™ sensor prototype</dd></div>
           </dl>
         </aside>
         <div className="i-main">

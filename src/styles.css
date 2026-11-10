@@ -525,3 +525,48 @@ sup.tm { font: 500 .3em/1 var(--sans); letter-spacing: .04em; vertical-align: to
 @media (min-width: 761px) and (max-width: 1280px) { .hf-c { display: none; } }
 .hero-foot > * { flex: none; }
 .hf-r { margin-left: auto; }
+
+/* ---- project page (v2): editorial ---- */
+.pj { padding: calc(var(--nav-h) + clamp(20px, 4vw, 60px)) var(--pad) 0; }
+.pj-back { display: inline-flex; align-items: center; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; margin-bottom: clamp(30px, 6vw, 80px); }
+.pj-head { display: grid; gap: 14px; }
+.pj-num { font: 500 15px/1 var(--sans); color: #c9d2f5; }
+.pj-logo { width: clamp(140px, 18vw, 240px); height: auto; filter: brightness(0) invert(1); opacity: .95; }
+.pj-title { font: 400 clamp(64px, 14vw, 250px)/.88 var(--display); letter-spacing: -.055em; }
+.pj-title .tm { font-size: .22em; vertical-align: super; letter-spacing: 0; }
+.pj-kicker { font: italic 400 clamp(26px, 3.6vw, 56px)/1.1 var(--serif); }
+.pj-kicker em { background: linear-gradient(170deg, #bcd9f0, #e8ecf7 60%, #d3dbf2); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pj-meta { display: grid; grid-template-columns: repeat(4, 1fr); margin: clamp(40px, 6vw, 90px) 0; border-top: 1px solid var(--line); }
+.pj-meta div { padding: 18px 18px 18px 0; border-right: 1px solid var(--line); }
+.pj-meta div + div { padding-left: 18px; }
+.pj-meta div:last-child { border-right: 0; }
+.pj-meta dt { font: 600 11px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: #9aa6d6; margin-bottom: 10px; }
+.pj-meta dd { margin: 0; font: 500 clamp(16px, 1.4vw, 20px)/1.35 var(--display); }
+.pj-media { position: relative; margin: 0 calc(var(--pad) * -1); padding: clamp(28px, 5vw, 80px); background: radial-gradient(80% 90% at 50% 40%, #0d1a52 0%, #050814 70%); display: grid; place-items: center; }
+.pj-media img, .pj-media video { width: 100%; max-height: 78vh; object-fit: contain; border-radius: 8px; }
+.pj-media.phone img, .pj-media.phone video { width: auto; max-height: 76vh; border-radius: 26px; }
+.pj-media.square img { width: auto; max-height: 76vh; }
+.pj-media figcaption { margin-top: 16px; font: 500 13px/1 var(--sans); color: #c9d2f5; }
+.pm { position: absolute; width: 16px; height: 16px; }
+.pm::before, .pm::after { content: ''; position: absolute; background: #fff; left: 7px; top: 0; width: 2px; height: 16px; }
+.pm::after { left: 0; top: 7px; width: 16px; height: 2px; }
+.pm.tl { left: 20px; top: 20px; } .pm.tr { right: 20px; top: 20px; } .pm.bl { left: 20px; bottom: 20px; } .pm.br { right: 20px; bottom: 20px; }
+.pj-story { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(30px, 6vw, 110px); margin: clamp(50px, 8vw, 130px) 0; }
+.pj-lead { font: 300 clamp(24px, 2.6vw, 42px)/1.25 var(--display); letter-spacing: -.02em; }
+.pj-side p { font: 400 17px/1.6 var(--sans); }
+.pj-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+.pj-links a { display: inline-flex; align-items: center; gap: 8px; padding: 14px 22px; border: 1px solid rgba(238,240,246,.35); border-radius: 999px; font: 600 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; transition: background .3s, color .3s; }
+.pj-links a:hover { background: #fff; color: #05060c; }
+.pj-next { display: block; border-top: 1px solid var(--line); padding: clamp(40px, 6vw, 90px) 0 clamp(60px, 8vw, 120px); }
+.pj-next small { display: block; font: 600 12px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: #9aa6d6; margin-bottom: 18px; }
+.pj-next span { display: inline-flex; align-items: center; gap: .2em; font: 400 clamp(52px, 10vw, 180px)/.9 var(--display); letter-spacing: -.05em; transition: transform .6s cubic-bezier(.16,1,.3,1); }
+.pj-next span .ar { width: .5em; height: .5em; }
+.pj-next:hover span { transform: translateX(20px); font-style: italic; }
+@media (max-width: 760px) {
+  .pj-meta { grid-template-columns: 1fr 1fr; }
+  .pj-meta div { border-right: 0; border-bottom: 1px solid var(--line); padding: 16px 12px 16px 0 !important; }
+  .pj-story { grid-template-columns: 1fr; }
+  .pj-media { padding: 40px 16px; }
+  .pj-media.phone img, .pj-media.phone video, .pj-media.square img { max-height: 62vh; max-width: 100%; }
+}
+@media (max-width: 760px) { .hero-wrap { height: 480vh; } }
